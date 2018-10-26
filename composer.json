@@ -1,0 +1,22 @@
+{
+    "name": "cmsmax/zoho-crm-api",
+    "description": "A simple package that lets you communicate with Zoho's CRM REST API using a fluent request builder.",
+    "keywords": ["zoho", "crm", "api", "rest", "fluent"],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Maksimov",
+            "email": "dmaksi@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cmsmax\\ZohoCrmApi\\": "src/"
+        }
+    }
+}
