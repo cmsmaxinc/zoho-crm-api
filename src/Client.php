@@ -72,7 +72,7 @@ class Client
     {
         if (substr($response->code, 0, 1) == '2') {
             if (isset($response->data->error) && ! empty($response->data->error)) {
-                throw new ErrorResponseException();
+                throw new ErrorResponseException($response->data->error);
             }
 
             return $response;
