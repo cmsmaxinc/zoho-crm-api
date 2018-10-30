@@ -1,6 +1,6 @@
 <?php
 
-namespace Cmsmax\ZohoCrmApi;
+namespace Cmsmax\ZohoCrmApi\Exceptions;
 
 class UnauthorizedException extends \Exception
 {

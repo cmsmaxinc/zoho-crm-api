@@ -2,6 +2,10 @@
 
 namespace Cmsmax\ZohoCrmApi;
 
+use Cmsmax\ZohoCrmApi\Exceptions\ErrorResponseException;
+use Cmsmax\ZohoCrmApi\Exceptions\InvalidTokenException;
+use Cmsmax\ZohoCrmApi\Exceptions\UnauthorizedException;
+
 class Client
 {
     protected $config = [];
@@ -67,6 +71,10 @@ class Client
     protected function processResponse(Response $response)
     {
         if (substr($response->code, 0, 1) == '2') {
+            if (isset($response->data->error) && ! empty($response->data->error)) {
+                throw new ErrorResponseException();
+            }
+
             return $response;
         }
 

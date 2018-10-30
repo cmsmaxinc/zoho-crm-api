@@ -2,7 +2,7 @@
 
 namespace Cmsmax\ZohoCrmApi\Exceptions;
 
-class InvalidTokenException extends \Exception
+class ErrorResponseException extends \Exception
 {
 
 }
