@@ -21,7 +21,7 @@ class Client
         $this->config = array_merge($this->config, $config);
     }
 
-    public function send($request)
+    public function send($request, $saveRequest = true)
     {
         if ($request instanceof \Closure) {
             $callback = $request;
@@ -29,31 +29,34 @@ class Client
             call_user_func($callback, $request);
         }
 
-        $this->request = $request;
+        // Save request for retrying
+        if ($saveRequest) {
+            $this->request = $request;
+        }
 
-        return $this->makeRequest();
+        return $this->makeRequest($request);
     }
 
     public function retry()
     {
-        return $this->makeRequest();
+        return $this->makeRequest($this->request);
     }
 
-    protected function makeRequest()
+    protected function makeRequest($request)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->request->url());
+        curl_setopt($ch, CURLOPT_URL, $request->url());
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        if ($this->request->withAuth) {
+        if ($request->withAuth) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer {$this->config['access_token']}"]);
         }
 
-        if ($this->request->method === 'post') {
+        if ($request->method === 'post') {
             curl_setopt($ch, CURLOPT_POST, true);
-            $data = $this->request->dataType === 'json'
-                ? json_encode(['data' => $this->request->data])
-                : $this->request->data;
+            $data = $request->dataType === 'json'
+                ? json_encode(['data' => $request->data])
+                : $request->data;
 
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
@@ -113,7 +116,7 @@ class Client
             'grant_type' => 'refresh_token',
         ])->post();
 
-        $response = $this->send($request);
+        $response = $this->send($request, false);
 
         $this->config['access_token'] = $response->data->access_token;
 
