@@ -9,6 +9,11 @@ class Client
 
     public function __construct($config = [])
     {
+        $this->config($config);
+    }
+
+    public function config($config)
+    {
         $this->config = array_merge($this->config, $config);
     }
 
