@@ -89,7 +89,7 @@ class Client
             throw new UnauthorizedException();
         }
 
-        return $response;
+        throw new ErrorResponseException('Unkown error', $response);
     }
 
     public function getTokens($code, $redirectUri)
