@@ -64,6 +64,17 @@ class Request
         return $this;
     }
 
+    public function put($data)
+    {
+        $this->method = 'put';
+
+        if ($data) {
+            $this->data = $data;
+        }
+
+        return $this;
+    }
+
     public function formData()
     {
         $this->dataType = 'form';

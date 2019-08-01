@@ -52,13 +52,17 @@ class Client
             curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer {$this->config['access_token']}"]);
         }
 
-        if ($request->method === 'post') {
+        if (in_array($request->method, ['put', 'post'])) {
             curl_setopt($ch, CURLOPT_POST, true);
             $data = $request->dataType === 'json'
                 ? json_encode(['data' => $request->data])
                 : $request->data;
 
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
+
+        if ($request->method === 'put') {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
         }
 
         $response = curl_exec($ch);
