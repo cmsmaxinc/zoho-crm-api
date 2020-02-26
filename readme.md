@@ -82,7 +82,7 @@ $response = $client->generateTokens($grantToken, $redirectUri);
 // Do something with the tokens
 $accessToken = $response->access_token;
 $refreshToken = $response->refresh_token;
-$expiresInSec = $response->expires_in_sec;
+$expiresInSec = $response->expires_in;
 $apiDomain = $response->api_domain;
 $tokenType = $response->token_type;
 $expiresIn = $response->expires_in;
@@ -94,7 +94,7 @@ There is also a convenient method for refreshing tokens.
 $response = $client->refreshToken($refreshToken);
 
 $accessToken = $response->access_token;
-$expiresInSec = $response->expires_in_sec;
+$expiresInSec = $response->expires_in;
 ...
 ```
 
